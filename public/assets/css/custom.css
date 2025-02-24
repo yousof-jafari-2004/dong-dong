@@ -1,0 +1,23 @@
+*{
+    font-family: "yekan-bakh-bold";
+}
+
+@font-face {
+    font-family: yekan-bakh-bold;
+    src: url("../../yekan_bakh/YekanBakh-Bold.woff");
+}
+
+@font-face {
+    font-family: yekan-bakh-medium;
+    src: url("../../yekan_bakh/YekanBakh-Medium.woff");
+}
+
+@font-face {
+    font-family: yekan-bakh-fat;
+    src: url("../../yekan_bakh/YekanBakh-Fat.woff");
+}
+
+@font-face {
+    font-family: yekan-bakh-heavy;
+    src: url("../../yekan_bakh/YekanBakh-Heavy.woff");
+}
