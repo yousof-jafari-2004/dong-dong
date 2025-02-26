@@ -10,6 +10,10 @@ import ShowCalculation from '../views/ShowCalculation.vue';
 import Index from '../views/Index.vue';
 import HowToUse from '../views/HowToUse.vue';
 import Profile from '../views/Profile.vue';
+import Friends from '../views/Friends.vue';
+import PublicGroups from '../views/PublicGroups.vue';
+import Requests from '../views/Requests.vue';
+
 
 const router = createRouter({
     history: createMemoryHistory(),
@@ -68,6 +72,21 @@ const router = createRouter({
             path: '/profile',
             name: 'Profile',
             component: Profile,
+        },
+        {
+            path: '/friends',
+            name: 'Friends',
+            component: Friends,
+        },
+        {
+            path: '/public-groups',
+            name: 'PublicGroups',
+            component: PublicGroups,
+        },
+        {
+            path: '/requests',
+            name: 'Requests',
+            component: Requests,
         },
     ],
 });

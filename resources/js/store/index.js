@@ -3,6 +3,7 @@ import user from "./modules/user";
 import group from "./modules/group";
 import expense from "./modules/expense";
 import total from "./modules/total";
+import friends from './modules/friends';
 
 const store = createStore({
     modules: {
@@ -10,6 +11,7 @@ const store = createStore({
         group: group,
         expense: expense,
         total: total,
+        friends: friends,
     },
 });
 

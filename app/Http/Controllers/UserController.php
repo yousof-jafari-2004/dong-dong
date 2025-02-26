@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FriendRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\User;
@@ -10,6 +11,14 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
+    // get all user data
+    public function index(Request $request)
+    {
+        return [
+            'requests' => count(FriendRequest::where('to_user_id', $request->user()->id)->get()),
+        ];
+    }
+
     // change user name
     public function changeName(Request $request)
     {

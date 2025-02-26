@@ -34,6 +34,7 @@ const store = useStore();
 let user = ref({});
 
 onMounted(() => {
+    store.dispatch('getUserData');
     user.value = store.state.user.user;
 });
 </script>

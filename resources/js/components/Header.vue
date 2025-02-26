@@ -14,10 +14,13 @@
                 </router-link>
                 <div v-else class="super-menu text-sm">
                     <input type="checkbox"/>
-                    <div class="fab px-5 py-2 rounded-xl border flex gap-3">
-						<div class="h-6 w-6 rounded-full bg-gray-500"></div>
+                    <div class="fab px-5 py-2 rounded-xl border flex items-center gap-3">
+						<span class="relative flex h-3 w-3">
+							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+							<span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+						</span>
                         <div class="flex items-center gap-3 text-sm">
-                            <span>{{ store.state.user.user.name.name }}</span>
+							<span>{{ store.state.user.user.name.name }}</span>
                         </div>
                     </div>
                     <div class="fac border">

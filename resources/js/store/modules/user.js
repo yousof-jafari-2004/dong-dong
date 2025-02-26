@@ -8,6 +8,7 @@ const user = {
         user: {
             name: localStorage.getItem('name') ? JSON.parse(localStorage.getItem('name')) : null,
             token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
+            requestsCount: 0,
         },
         peoples: [],
     },
@@ -87,9 +88,20 @@ const user = {
                     return err.response.data.error ? err.response.data.error : err.response.data.errors;
                 })
         },
+
+        async getUserData({ commit }){
+            return axiosClient.get('edit-user/all')
+                .then(res => {
+                    commit('setAllUserData', res.data);
+                })
+        }
     },
 
     mutations: {
+        setAllUserData(state, data){
+            state.user.requestsCount = data.requests;
+        },
+
         setUserData(state, data)
         {
             state.user.name = data.user;
