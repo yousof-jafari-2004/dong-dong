@@ -81,6 +81,10 @@
 import { useStore } from 'vuex';
 import { ref } from 'vue';
 import router from '../../router';
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+
 let loading = ref(false);
 
 let user = ref({
@@ -115,6 +119,7 @@ const register = () => {
                 errors.value.user_name = res.user_name ? res.user_name : null;
                 errors.value.password = res.password ? res.password : null;
             }else {
+                toast.success("به دونگ دونگ خوش آمدید")
                 router.push({ name: "Home" })
             }
         })

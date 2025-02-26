@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\TotalCalculation;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +21,16 @@ use App\Http\Controllers\TotalCalculation;
 */
 
 Route::prefix('/auth')->group(function() {
+
     Route::post('register', [AuthController::class, 'register']);
+
     Route::post('login', [AuthController::class, 'login']);
+
 });
 
+// auth middleware to check if the user 
 Route::middleware('auth:sanctum')->group(function(){
+
     Route::prefix('/groups')->group(function(){
         Route::get('/', [GroupController::class, 'index']);
         Route::post('create', [GroupController::class, 'create']);
@@ -40,6 +46,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('total')->group(function() {
         Route::get('/all/{id}', [TotalCalculation::class, 'index']);
         Route::get('/all', [TotalCalculation::class, 'steps']);
+    });
+
+    Route::prefix('edit-user')->group(function(){
+        Route::post('/name', [UserController::class, 'changeName']);
+        Route::post('/password', [UserController::class, 'changePass']);
     });
 
     Route::post('user/create', [PeopleController::class, 'create']);

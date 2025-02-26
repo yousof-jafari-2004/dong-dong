@@ -13,6 +13,7 @@ const user = {
     },
 
     actions: {
+        // register new user
         async register({commit} , data)
         {
             return await axiosClient.post('auth/register', data)
@@ -24,6 +25,7 @@ const user = {
                 })
         },
 
+        // login user
         async login({ commit }, data)
         {
             return await axiosClient.post('auth/login', data)
@@ -34,6 +36,7 @@ const user = {
                     return err.response.data.error ? err.response.data.error : err.response.data.errors;
                 })
         },
+        // create new people
         async createUser({ commit }, data)
         {
             return await axiosClient.post('user/create', data)
@@ -45,6 +48,7 @@ const user = {
                 })
         },
 
+        // get all the peoples
         async allUsers({ commit })
         {
             return await axiosClient.get('user')
@@ -53,10 +57,36 @@ const user = {
                 })
         },
 
+        // delete people
         async deleteUser({ commit }, id)
         {
             return await axiosClient.delete(`user/delete/${id}`)
-        }
+        },
+
+        // edit the loggined user name and user name
+        async changeUserName({ commit }, data)
+        {
+            return axiosClient.post('edit-user/name', data)
+                .then(res => {
+                    commit('updateUserData', res.data)
+                })
+                .catch(err => {
+                    return err.response.data.error ? err.response.data.error : err.response.data.errors;
+                })
+        },
+
+        // update loggined user password
+        async updatePassword({ commit }, data)
+        {
+            return axiosClient.post('edit-user/password', data)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err);
+                    return err.response.data.error ? err.response.data.error : err.response.data.errors;
+                })
+        },
     },
 
     mutations: {
@@ -65,6 +95,12 @@ const user = {
             state.user.name = data.user;
             state.user.token = data.token;
             localStorage.setItem('token', state.user.token);
+            localStorage.setItem('name', JSON.stringify(state.user.name));
+        },
+
+        updateUserData(state, data)
+        {
+            state.user.name = data;
             localStorage.setItem('name', JSON.stringify(state.user.name));
         },
 

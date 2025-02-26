@@ -1,18 +1,18 @@
 <template>
-    <div class="text-gray-700">
+    <div>
         <Header></Header>
-        <div v-if="user.token" class="grid md:grid-cols-4 grid-cols-1 gap-5 px-5">
+        <div v-if="user.token" class="grid md:grid-cols-4 grid-cols-1 gap-5 px-5 md:mb-0 mb-20">
             <div class="col-span-1 md:block hidden">
                 <Menu/>
             </div>
             <div class="md:col-span-3 col-span-1">
-                <div class="p-5 border w-full md:mt-28 mt-28 rounded-xl">
+                <div class="p-5 border w-full md:mt-28 mt-28 rounded-xl bg-white">
                     <RouterView />
                 </div>
             </div>
         </div>
         <div v-else class="px-5">
-            <div class="p-5 w-full md:mt-28 mt-28 rounded-xl">
+            <div class="p-5 w-full md:mt-28 mt-28 rounded-xl md:mb-0 mb-20">
                 <RouterView />
             </div>
         </div>

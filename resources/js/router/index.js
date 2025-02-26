@@ -9,6 +9,7 @@ import Login from '../views/Auth/Login.vue';
 import ShowCalculation from '../views/ShowCalculation.vue';
 import Index from '../views/Index.vue';
 import HowToUse from '../views/HowToUse.vue';
+import Profile from '../views/Profile.vue';
 
 const router = createRouter({
     history: createMemoryHistory(),
@@ -62,7 +63,12 @@ const router = createRouter({
             path: '/how-to-use',
             name: 'HowToUse',
             component: HowToUse,
-        }
+        },
+        {
+            path: '/profile',
+            name: 'Profile',
+            component: Profile,
+        },
     ],
 });
 

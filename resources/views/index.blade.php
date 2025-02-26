@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/bootstrap.rtl.min.css"/>
         @vite('resources/css/app.css')
     </head>
-    <body class="font-family: yekan-bakh-medium;" dir="rtl">
+    <body class="bg-gray-50" dir="rtl">
         <div id="app"></div>
         @vite(['resources/js/app.js'])
     </body>

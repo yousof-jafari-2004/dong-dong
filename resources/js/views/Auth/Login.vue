@@ -5,7 +5,7 @@
                 <div class="w-full rounded-xl px-5 py-3 text-gray-700 bg-gray-50 border">
                     <h3 class="text-xl">ورود به سامانه</h3>
                 </div>
-                <div v-if="errors.name || errors.user_name || errors.password" class="bg-red-100 border border-red-500 p-5 rounded-xl">
+                <div v-if="errors" class="bg-red-100 border border-red-500 p-5 rounded-xl">
                     <ul class="flex flex-col gap-5 text-red-500 text-sm">
                         <li>اطلاعات وارد شده نادرست است</li>
                     </ul>
@@ -66,6 +66,10 @@
 import { useStore } from 'vuex';
 import { ref } from 'vue';
 import router from '../../router';
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+
 let loading = ref(false);
 
 let user = ref({
@@ -73,10 +77,7 @@ let user = ref({
     password: '',
 });
 
-let errors = ref({
-    user_name: '',
-    password: '',
-});
+let errors = ref(false);
 
 const store = useStore();
 
@@ -91,10 +92,10 @@ const login = () => {
             loading.value = false;
             if(res)
             {
-                errors.value.user_name = res ? res : null;
-                errors.value.user_name = res.user_name ? res.user_name : null;
-                errors.value.password = res.password ? res.password : null;
+                errors.value = true;
             }else {
+                errors.value = false;
+                toast.success(" به دونگ دونگ خوش آمدید " + store.state.user.user.name.name)
                 router.push({ name: "Home" })
             }
         })
