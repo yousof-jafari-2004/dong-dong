@@ -12,10 +12,8 @@ const expense = {
         {
             return await axiosClient.post('expenses/create', data)
                 .then(res => {
-                    console.log(res);
                 })
                 .catch(err => {
-                    console.log(err);
                     return err.response.data.error ? err.response.data.error : err.response.data.errors;
                 })
         },

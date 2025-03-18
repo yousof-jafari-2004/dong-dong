@@ -11,7 +11,6 @@ const total = {
     actions : {
         async fetchTotalPayment({commit}, id)
         {
-            console.log(id);
             return await axiosClient.get(`total/all/${id}`)
                 .then(res => {
                     commit("setTotal",res.data)

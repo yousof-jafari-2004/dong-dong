@@ -24,14 +24,16 @@
                         <div class="w-full">
                             <div class="flex-1 flex dark">
                                 <select @change="setPeoples" class="w-full px-3 py-2 rounded-xl">
-                                    <option selected>انتخاب افراد</option>
-                                    <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</option>
+                                    <option selected>انتخاب دوستان</option>
+                                    <option v-for="user in users" :key="user.id" :value="user.id">
+                                        {{ user.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="w-full">
                             <div class="rounded-xl py-5 p-2 border flex gap-3 text-sm flex-wrap">
-                                <button v-for="user in group.users" :key="user.id" @click="removeFromList(user.id)" class="px-3 py-2 rounded-xl bg-sky-500 text-white flex items-center gap-3">
+                                <button type="button" v-for="user in group.users" :key="user.id" @click="removeFromList(user.id)" class="px-3 py-2 rounded-xl bg-sky-500 text-white flex items-center gap-3">
                                     <span>{{ user.name }}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="10" height="10"><path d="M23.707.293h0a1,1,0,0,0-1.414,0L12,10.586,1.707.293a1,1,0,0,0-1.414,0h0a1,1,0,0,0,0,1.414L10.586,12,.293,22.293a1,1,0,0,0,0,1.414h0a1,1,0,0,0,1.414,0L12,13.414,22.293,23.707a1,1,0,0,0,1.414,0h0a1,1,0,0,0,0-1.414L13.414,12,23.707,1.707A1,1,0,0,0,23.707.293Z"/></svg>
                                 </button>
@@ -132,7 +134,7 @@ const createGroup = () => {
         users: group.value.users,
     }
     loading.value = true;
-    store.dispatch('createGroup', data)
+    store.dispatch('createPublicGroup', data)
         .then(res => {
             loading.value = false;
             if(res)
@@ -148,9 +150,9 @@ const createGroup = () => {
 }
 
 onMounted(() => {
-    store.dispatch('allUsers')
+    store.dispatch('fetchAllFriends')
         .then(() => {
-            users.value = store.state.user.peoples;
+            users.value = store.state.friends.friends;
         })
 })
 </script>

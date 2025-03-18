@@ -1,40 +1,73 @@
 <template>
     <div class="h-full w-full bg-black fixed top-0 left-0 opacity-5 z-10"></div>
-    <div class="h-full w-full fixed top-0 left-0 flex items-center justify-center z-10">
+    <div class="h-full w-full fixed top-0 left-0 flex items-center justify-center z-10 text-sm">
         <div class=" bg-white md:w-1/3 w-72 rounded-xl  shadow-xl border">
             <div class="w-full bg-gray-50 text-gray-700 rounded-xl p-5 flex items-center justify-between">
-                <h3 class="text-xl">ساخت گروه جدید</h3>
+                <h3 class="text-xl">ساخت هزینه جدید</h3>
                 <button @click="$emit('closeCreate')" class="border flex items-center justify-center border rounded-xl w-10 h-10">
                     <svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="20" height="20"><path d="M23.707.293h0a1,1,0,0,0-1.414,0L12,10.586,1.707.293a1,1,0,0,0-1.414,0h0a1,1,0,0,0,0,1.414L10.586,12,.293,22.293a1,1,0,0,0,0,1.414h0a1,1,0,0,0,1.414,0L12,13.414,22.293,23.707a1,1,0,0,0,1.414,0h0a1,1,0,0,0,0-1.414L13.414,12,23.707,1.707A1,1,0,0,0,23.707.293Z"/></svg>
                 </button>
             </div>
             <div class="w-full p-5">
-                <div v-if="errors.name" class="mb-5 bg-red-100 border border-red-500 p-5 rounded-xl">
+                <div v-if="errors.name || errors.buyer_id || errors.counting_order || errors.public || errors.total_payment" class="mb-5 bg-red-100 border border-red-500 p-5 rounded-xl">
                     <ul class="flex flex-col gap-5 text-red-500 text-sm">
-                        <li>لطفا نام گروه را وارد کنید</li>
+                        <li v-if="errors.name">لطفا نام هزینه را وارد کنید</li>
+                        <li v-if="errors.buyer_id">لطفا خرید کننده را وارد کنید</li>
+                        <li v-if="errors.total_payment">لطفا هزینه را وارد کنید</li>
+                        <li v-if="errors.counting_order">لطفا نام مرحله را وارد کنید</li>
                     </ul>
                 </div>
                 <form @submit.prevent="createGroup">
                     <div class="flex flex-col gap-5">
                         <div class="w-full">
                             <div class="flex-1 flex dark">
-                                <input v-model="group.name" type="text" class="rounded-none rounded-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 duration-150" placeholder="نام گروه">
+                                <input v-model="group.name" type="text" class="rounded-none rounded-xl bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 duration-150" placeholder="نام گروه">
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <div class="flex-1 flex dark flex-col gap-1">
+                                <span class="text-sm">خرید کننده</span>
+                                <select v-model="group.buyer_id" class="w-full px-3 py-2 rounded-xl">
+                                    <option :value="store.state.user.user.name.id">{{ store.state.user.user.name.name }}</option>
+                                    <option v-for="user in users" :key="user.id" :value="user.id">
+                                        {{ user.name }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="w-full">
                             <div class="flex-1 flex dark">
                                 <select @change="setPeoples" class="w-full px-3 py-2 rounded-xl">
-                                    <option selected>انتخاب افراد</option>
-                                    <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }}</option>
+                                    <option selected>انتخاب دوستان</option>
+                                    <option :value="store.state.user.user.name.id">{{ store.state.user.user.name.name }}</option>
+                                    <option v-for="user in users" :key="user.id" :value="user.id">
+                                        {{ user.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="w-full">
-                            <div class="rounded-xl py-5 p-2 border flex gap-3 text-sm flex-wrap">
-                                <button v-for="user in group.users" :key="user.id" @click="removeFromList(user.id)" class="px-3 py-2 rounded-xl bg-sky-500 text-white flex items-center gap-3">
+                            <div class="rounded-xl py-2 p-2 border flex gap-3 text-sm flex-wrap">
+                                <button type="button" v-for="user in group.users" :key="user.id" @click="removeFromList(user.id)" class="px-3 py-2 rounded-xl bg-sky-500 text-white flex items-center gap-3">
                                     <span>{{ user.name }}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="10" height="10"><path d="M23.707.293h0a1,1,0,0,0-1.414,0L12,10.586,1.707.293a1,1,0,0,0-1.414,0h0a1,1,0,0,0,0,1.414L10.586,12,.293,22.293a1,1,0,0,0,0,1.414h0a1,1,0,0,0,1.414,0L12,13.414,22.293,23.707a1,1,0,0,0,1.414,0h0a1,1,0,0,0,0-1.414L13.414,12,23.707,1.707A1,1,0,0,0,23.707.293Z"/></svg>
                                 </button>
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <div class="flex-1 flex flex-col gap-2 dark">
+                                <input v-model="group.total_payment" type="text" class="rounded-none rounded-xl bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 duration-150" placeholder="میزان هزینه، مثلا : 50000">
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <div class="flex-1 flex flex-col gap-2 dark">
+                                <input v-model="group.counting_order" type="number" class="rounded-none rounded-xl bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 duration-150" placeholder="مرحله خرید ، مثلا : 1">
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <div class="flex-1 flex items-center justify-right dark">
+                                <span class="text-sm">عمومی</span>
+                                <input v-model="group.public" type="checkbox" class="rounded-none rounded-xl bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 duration-150">
                             </div>
                         </div>
                         <div class="w-full">
@@ -74,29 +107,40 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineProps } from 'vue';
 import { useToast } from 'vue-toastification';
 import { useStore } from 'vuex';
 
-const toast = useToast();
+const props = defineProps(['group']);
 
-const emit = defineEmits(['refreshGroups'])
+const toast = useToast();
 
 const store = useStore();
 
 let group = ref({
     name: '',
     users: [],
+    buyer_id: '',
+    counting_order: '',
+    total_payment: '',
+    public: true,
+    group_id: props.group.id,
 })
 
 let users = ref([]);
 
 let errors = ref({
     name: '',
+    buyer_id: '',
+    counting_order: '',
+    total_payment: '',
+    public: '',
+    // group_id: props.group.id,
 })
 
 let loading = ref(false);
 
+// push the selected users to array
 const setPeoples = id => {
     let currentUser = {id: 0, name: ''};
     for(let i = 0; i < group.value.users.length; i++ )
@@ -107,7 +151,11 @@ const setPeoples = id => {
         }
     }
     users.value.forEach(user => {
-        if(user.id == id.target.value)
+        if(store.state.user.user.name.id == id.target.value)
+        {
+            currentUser.name = store.state.user.user.name.name;
+            currentUser.id = store.state.user.user.name.id;
+        }else if(user.id == id.target.value)
         {
             currentUser.name = user.name;
             currentUser.id = user.id;
@@ -116,6 +164,7 @@ const setPeoples = id => {
     group.value.users.push(currentUser)
 }
 
+// when clicked on the users list, delete them from the array
 const removeFromList = id => {
     for(let i = 0; i < group.value.users.length; i++ )
     {
@@ -126,31 +175,52 @@ const removeFromList = id => {
     }
 }
 
+// create new group
 const createGroup = () => {
     let data = {
         name: group.value.name,
         users: group.value.users,
+        buyer_id: group.value.buyer_id,
+        counting_order: group.value.counting_order,
+        total_payment: group.value.total_payment,
+        group_id: props.group.id,
+        public: group.value.public,
     }
     loading.value = true;
-    store.dispatch('createGroup', data)
+    store.dispatch('createPublicExpense', data)
         .then(res => {
             loading.value = false;
             if(res)
             {
                 errors.value.name = res.name ? res.name : null;
+                errors.value.buyer_id = res.buyer_id ? res.name : null;
+                errors.value.counting_order = res.counting_order ? res.counting_order : null;
+                errors.value.total_payment = res.total_payment ? res.total_payment : null;
+                errors.value.public = res.public ? res.public : null;
             }else {
                 toast.success("با موفقیت ایجاد شد")
-                emit('refreshGroups');
                 group.value.name = '';
                 errors.value.name = '';
+
+                group.value.buyer_id = '';
+                errors.value.buyer_id = '';
+
+                group.value.counting_order = '';
+                errors.value.counting_order = '';
+
+                group.value.total_payment = '';
+                errors.value.total_payment = '';
+
+                group.value.public = true;
+                errors.value.public = true;
             }  
         })
 }
 
 onMounted(() => {
-    store.dispatch('allUsers')
+    store.dispatch('fetchAllFriends')
         .then(() => {
-            users.value = store.state.user.peoples;
+            users.value = store.state.friends.friends;
         })
 })
 </script>

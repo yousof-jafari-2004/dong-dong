@@ -7,8 +7,11 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\PublicGroupController;
 use App\Http\Controllers\TotalCalculation;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\PublicExpenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +73,18 @@ Route::middleware('auth:sanctum')->group(function(){
 
     });
 
+    Route::prefix('public-expense')->group(function() {
+
+        Route::post('create', [PublicExpenseController::class, 'create']);
+
+        Route::post('/', [PublicExpenseController::class, 'index']);
+
+        Route::post('/total-payment', [PublicExpenseController::class, 'totalCalculation']);
+
+        Route::post('/steps', [PublicExpenseController::class, 'steps']);
+
+    });
+
     Route::prefix('friend')->group(function(){
 
         Route::post('/find', [FriendController::class, 'find']);
@@ -85,6 +100,24 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/all', [FriendController::class, 'index']);
 
         Route::post('/remove', [FriendController::class, 'remove']);
+    });
+
+    Route::prefix('public-groups')->group(function () {
+
+        Route::get('/', [PublicGroupController::class, 'index']);
+
+        Route::post('create', [PublicGroupController::class, 'create']);
+
+        Route::delete('delete/{group}', [PublicGroupController::class, 'delete']);
+
+    });
+
+    Route::prefix('message')->group(function(){
+        
+        Route::post('create', [ChatController::class, 'create']);
+
+        Route::post('/', [ChatController::class, 'index']);
+    
     });
 
     Route::post('user/create', [PeopleController::class, 'create']);

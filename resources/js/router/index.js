@@ -13,6 +13,7 @@ import Profile from '../views/Profile.vue';
 import Friends from '../views/Friends.vue';
 import PublicGroups from '../views/PublicGroups.vue';
 import Requests from '../views/Requests.vue';
+import ShowTotalPublicCalculation from '../views/ShowTotalPublicCalculation.vue';
 
 
 const router = createRouter({
@@ -88,6 +89,11 @@ const router = createRouter({
             name: 'Requests',
             component: Requests,
         },
+        {
+            path: '/show-total-public-calculation/:id/:group_id',
+            name: 'ShowTotalPublicCalculation',
+            component: ShowTotalPublicCalculation,
+        }
     ],
 });
 

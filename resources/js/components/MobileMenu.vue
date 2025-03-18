@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full px-5  fixed bottom-5 text-sm">
+    <div class="w-full px-5 fixed h-12 w-28 bottom-5 text-sm">
         <div class="super-menu">
             <input type="checkbox"/>
             <div class="fab">

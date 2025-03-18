@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\People;
 use App\Models\Groups;
+use App\Models\PublicExpense;
 
 class User extends Authenticatable
 {
@@ -59,5 +60,20 @@ class User extends Authenticatable
     public function Expense()
     {
         return $this->hasMany(Expenses::class);
+    }
+
+    public function PublicGroups()
+    {
+        return $this->belongsToMany('App\Models\PublicGroup','public_groups_users', 'user_id', 'public_group_id');
+    }
+
+    public function PublicGroup()
+    {
+        return $this->hasMany(PublicGroup::class);
+    }
+    
+    public function UserPublicExpense()
+    {
+        return $this->hasMany(PublicExpense::class);
     }
 }

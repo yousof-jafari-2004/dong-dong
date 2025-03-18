@@ -4,6 +4,9 @@ import group from "./modules/group";
 import expense from "./modules/expense";
 import total from "./modules/total";
 import friends from './modules/friends';
+import publicGroups from './modules/publicGroups';
+import chat from './modules/chat';
+import publicExpense from './modules/publicExpense';
 
 const store = createStore({
     modules: {
@@ -12,6 +15,9 @@ const store = createStore({
         expense: expense,
         total: total,
         friends: friends,
+        publicGroups: publicGroups,
+        chat: chat,
+        publicExpense: publicExpense,
     },
 });
 
