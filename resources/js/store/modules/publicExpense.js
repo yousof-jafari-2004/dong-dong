@@ -8,6 +8,7 @@ const publicExpense = {
         publicExpenses: [],
         steps: [],
         total: [],
+        currentExpense: [],
     },
 
     actions: {
@@ -43,7 +44,25 @@ const publicExpense = {
                 .then(res => {
                     commit("setPublicTotal",res.data)
                 })
-        }
+        },
+
+        async fetchCurrentPublicExpense({ commit }, data)
+        {
+            return await axiosClient.post(`public-expense/edit`, data)
+                .then(res => {
+                    commit("setCurrentExpense",res.data.data)
+                })
+        },
+
+        async updatePublicExpense({ commit }, data)
+        {
+            return axiosClient.post('public-expense/update', data)
+                .then(res => {
+                })
+                .catch(err => {
+                    return err.response.data.errors ? err.response.data.errors : err.response.data.error;
+                })
+        },
     },
 
     mutations: {
@@ -58,6 +77,10 @@ const publicExpense = {
         setPublicSteps(state, data)
         {
             state.steps = data;
+        },
+        setCurrentExpense(state, data)
+        {
+            state.currentExpense = data;
         }
     }
 }

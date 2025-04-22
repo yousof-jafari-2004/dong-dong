@@ -20,7 +20,7 @@ class ChatMessage implements ShouldBroadcast
      */
     public function __construct(Chat $chat)
     {
-        $this->chatMessage = $chat;
+        // $this->chatMessage = $chat;
     }
 
     /**

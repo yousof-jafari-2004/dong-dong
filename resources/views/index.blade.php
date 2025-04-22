@@ -8,10 +8,10 @@
         <!-- tailwind -->
         <link href="/src/styles.css" rel="stylesheet">
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
+        <!-- <link rel="preconnect" href="https://fonts.bunny.net"> -->
         <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css" rel="stylesheet"/>
+        <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css" rel="stylesheet"/> -->
         <!-- JavaScript -->
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
 

@@ -1,5 +1,6 @@
 <template>
   <div class="p-5 border-b">
+    <EditPublicExpense :group="props.group" :currentExpense="currentForEditing"  v-if="showEdit" @closeEdit="toggleEdit"/>
     <CreateGroupExpense :group="props.group" v-if="showCreate"  @closeCreate="toggle"/>
     <div class="w-full flex items-center justify-between">
         <h3 class="text-sm">لیست هزینه ها</h3>
@@ -210,7 +211,7 @@
                           </svg>
                       </button>
                       <!-- {{ expense.user.id }} -->
-                      <button v-if="expense.user.id == store.state.user.user.name.id" class="text-yellow-500">
+                      <button @click="editStart(expense.id)" v-if="expense.user.id == store.state.user.user.name.id" class="text-yellow-500">
                           <span>ویرایش</span>
                       </button>
                     </div>
@@ -229,6 +230,7 @@
 import { ref, defineProps, onMounted } from 'vue';
 import CreateGroupExpense from './CreateGroupExpense.vue';
 import { useStore } from 'vuex';
+import EditPublicExpense from './EditPublicExpense.vue';
 
 const store = useStore();
 
@@ -238,10 +240,25 @@ let loading = ref(true);
 
 let expenses = ref([]);
 
+let currentForEditing = ref(0);
+
 let showCreate = ref(false);
+
+let showEdit = ref(false);
 
 const toggle = () => {
   showCreate.value = !showCreate.value;
+}
+
+const toggleEdit = () => {
+    showEdit.value = !showEdit.value;
+    fetchAllPublicExpense();
+}
+
+const editStart = id => {
+    currentForEditing.value = id;
+    toggleEdit();
+
 }
 
 const fetchAllPublicExpense = () => {

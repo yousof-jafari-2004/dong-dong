@@ -83,6 +83,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
         Route::post('/steps', [PublicExpenseController::class, 'steps']);
 
+        Route::post('/edit', [PublicExpenseController::class, 'edit']);
+
+        Route::post('/update', [PublicExpenseController::class, 'update']);
+
     });
 
     Route::prefix('friend')->group(function(){

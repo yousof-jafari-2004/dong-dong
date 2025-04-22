@@ -58,7 +58,7 @@ class PublicExpenseController extends Controller
     {
         $a = [];
         $final = [];
-        $expenses = PublicExpense::where('group_id', $request->group_id)->where('counting_order', $request->id)->get();
+        $expenses = PublicExpense::where('group_id', $request->group_id)->where('counting_order', $request->id)->where('public', 1)->get();
         // return $expenses;
         foreach($expenses as $expense)
         {   
@@ -142,5 +142,42 @@ class PublicExpenseController extends Controller
         }, $grouped_by_name));
 
         return $final_result;
+    }
+
+    public function edit(Request $request)
+    {
+        $expense = PublicExpense::where('id', $request->id)->get();
+        return PublicExpenseResource::collection($expense);
+    }
+
+    public function update(Request $request)
+    {
+        // return $request->users;
+        $userIds = [];
+        
+        $data = $request->validate([
+            'buyer_id' => 'required',
+            'counting_order' => 'required',
+            'total_payment' => 'required',
+            'name' => 'required',
+            'public' => 'required',
+            'group_id' => 'required',
+        ]);
+
+        $expense = PublicExpense::where('id', $request->expense_id)->get()[0];
+
+        $prevUsers = $expense->users;  
+
+        foreach($prevUsers as $user)
+        {
+            $expense->users()->detach($user['id']);
+        }
+
+        $expense->update($data);
+        
+        foreach($request->users as $user)
+        {
+            $expense->users()->attach($user['id']);
+        }
     }
 }
